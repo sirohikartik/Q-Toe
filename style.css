@@ -1,48 +1,282 @@
-body{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-card: #21262d;
+    --border-color: #30363d;
+    --text-primary: #f0f6fc;
+    --text-muted: #8b949e;
+    --color-x: #58a6ff;
+    --color-o: #f78166;
+    --color-accent: #238636;
+    --color-gold: #f1e05a;
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 }
-.Game
-{
-    height: 80%;
-    width: 50%;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.r1{
-    height:33.3%;
-    width: 100%;
-    display: flex;
-    background-color: red;
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-.r2{
-    height:33.3%;
-    width: 100%;
-    display: flex;
-    background-color: blue;
-}
-.r3{
-    height:33.3%;
-    width: 100%;
-    display: flex;
-    background-color: red;
-}
-.r11, .r12, .r13,
-.r21, .r22, .r23,
-.r31, .r32, .r33 {
-    height: 100%;
-    width: 33.3%;
-    background-color: black;
-    color: white;
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-main);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 100px;
+    padding: 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 520px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 100px rgba(88, 166, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.app-header {
+    text-align: center;
+}
+
+.app-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.controls-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mode-select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mode-select-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mode-select-group select {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.mode-select-group select:focus {
+    border-color: var(--color-x);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+}
+
+.scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.score-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.score-card .label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.score-card .score {
+    font-size: 22px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+}
+
+.score-card.player .score { color: var(--color-x); }
+.score-card.ties .score { color: var(--color-gold); }
+.score-card.ai .score { color: var(--color-o); }
+
+.status-banner {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    background: rgba(88, 166, 255, 0.1);
+    color: var(--color-x);
+    border-radius: 10px;
+    border: 1px solid rgba(88, 166, 255, 0.25);
+    transition: all 0.25s ease;
+}
+
+.status-banner.ai-turn {
+    background: rgba(247, 129, 102, 0.1);
+    color: var(--color-o);
+    border-color: rgba(247, 129, 102, 0.25);
+}
+
+.status-banner.win {
+    background: rgba(35, 134, 54, 0.2);
+    color: #3fb950;
+    border-color: rgba(35, 134, 54, 0.4);
+}
+
+.status-banner.loss {
+    background: rgba(248, 81, 73, 0.2);
+    color: #f85149;
+    border-color: rgba(248, 81, 73, 0.4);
+}
+
+.status-banner.draw {
+    background: rgba(241, 224, 90, 0.15);
+    color: var(--color-gold);
+    border-color: rgba(241, 224, 90, 0.3);
+}
+
+.game-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.Game {
+    width: 320px;
+    height: 320px;
+    background-color: var(--border-color);
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px;
+    border-radius: 16px;
+}
+
+.r1, .r2, .r3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.cell {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 54px;
+    font-weight: 800;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s, transform 0.1s;
+}
+
+.cell:hover:empty {
+    background-color: #2b313a;
+    transform: scale(0.98);
+}
+
+.cell.x {
+    color: var(--color-x);
+    text-shadow: 0 0 15px rgba(88, 166, 255, 0.4);
+}
+
+.cell.o {
+    color: var(--color-o);
+    text-shadow: 0 0 15px rgba(247, 129, 102, 0.4);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s, background-color 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: #238636;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2ea043;
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: #30363d;
+}
+
+.app-footer {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+#policy-status {
+    color: var(--color-x);
+    font-weight: 500;
 }

@@ -3,27 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe Game</title>
+    <title>AI Tic-Tac-Toe | Reinforcement Learning & Minimax</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="Game">
-        <div class="r1">
-<div class="r11" id="11"></div>
-<div class="r12" id="12"></div>
-<div class="r13" id="13"></div>
-</div>
-<div class="r2">
-<div class="r21" id="21"></div>
-<div class="r22" id="22"></div>
-<div class="r23" id="23"></div>
-</div>
-<div class="r3">
-<div class="r31" id="31"></div>
-<div class="r32" id="32"></div>
-<div class="r33" id="33"></div>
-</div>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>⚡ AI Tic-Tac-Toe</h1>
+            <p class="subtitle">Play against a Deep Q-Network trained on Apple Silicon MPS</p>
+        </header>
+
+        <div class="controls-panel">
+            <div class="mode-select-group">
+                <label for="opponent-mode">Opponent Engine:</label>
+                <select id="opponent-mode">
+                    <option value="rl" selected>🤖 Deep Q-Network (PyTorch MPS)</option>
+                    <option value="minimax">🧠 Minimax (Impossible)</option>
+                    <option value="random">🎲 Random (Novice)</option>
+                </select>
+            </div>
+            
+            <div class="scoreboard">
+                <div class="score-card player">
+                    <span class="label">You (X)</span>
+                    <span class="score" id="score-player">0</span>
+                </div>
+                <div class="score-card ties">
+                    <span class="label">Draws</span>
+                    <span class="score" id="score-ties">0</span>
+                </div>
+                <div class="score-card ai">
+                    <span class="label">AI (O)</span>
+                    <span class="score" id="score-ai">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-banner" id="status-banner">Your Turn (X)</div>
+
+        <div class="game-wrapper">
+            <div class="Game">
+                <div class="r1">
+                    <div class="cell r11" id="11" data-index="0"></div>
+                    <div class="cell r12" id="12" data-index="1"></div>
+                    <div class="cell r13" id="13" data-index="2"></div>
+                </div>
+                <div class="r2">
+                    <div class="cell r21" id="21" data-index="3"></div>
+                    <div class="cell r22" id="22" data-index="4"></div>
+                    <div class="cell r23" id="23" data-index="5"></div>
+                </div>
+                <div class="r3">
+                    <div class="cell r31" id="31" data-index="6"></div>
+                    <div class="cell r32" id="32" data-index="7"></div>
+                    <div class="cell r33" id="33" data-index="8"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="btn-restart" class="btn btn-primary">Restart Game</button>
+            <button id="btn-reset-scores" class="btn btn-secondary">Reset Scores</button>
+        </div>
+
+        <footer class="app-footer">
+            <p>Trained via PyTorch DQN with Apple Silicon GPU acceleration · <span id="policy-status">Loading policy...</span></p>
+        </footer>
     </div>
+
+    <script type="module" src="script.js"></script>
 </body>
-<script type="module" src="script.js"></script>
 </html>
